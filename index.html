@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+body { margin: 0; padding: 0; background: transparent; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; color: #ffffff; }
+.box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px 16px; text-align: center; }
+.label { font-size: 11px; text-transform: uppercase; color: #94a3b8; margin-bottom: 4px; }
+.timer { font-size: 20px; font-weight: bold; color: #10b981; font-family: monospace; }
+</style>
+</head>
+<body>
+
+<div class="box">
+<div class="label">Prochaine maj à xx:20</div>
+<div class="timer" id="timer">00m 00s</div>
+</div>
+
+<script>
+function updateCountdown() {
+const now = new Date();
+let target = new Date(now);
+if (now.getMinutes() >= 20) {
+  target.setHours(now.getHours() + 1);
+}
+target.setMinutes(20);
+target.setSeconds(0);
+target.setMilliseconds(0);
+
+const diff = target - now;
+
+const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+const m = String(minutes).padStart(2, '0');
+const s = String(seconds).padStart(2, '0');
+
+document.getElementById('timer').textContent = m + 'm ' + s + 's';
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
